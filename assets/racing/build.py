@@ -252,7 +252,11 @@ def box_quads(x0, x1, y0, y1, z0, z1, top, side, side2=None):
 
 
 def stand_rows(x, z0, z1, heights, fill="#5c5c68"):
-    return [([(x, h, z0), (x, h, z1), (x, h + 0.45, z1), (x, h + 0.45, z0)], fill, "prop") for h in heights]
+    out = []
+    for k, h in enumerate(heights):
+        col = fill if k % 2 == 0 else "#b9bcc6"
+        out.append(([(x, h, z0), (x, h, z1), (x, h + 0.55, z1), (x, h + 0.55, z0)], col, "prop"))
+    return out
 
 
 def track_quads():
@@ -260,7 +264,10 @@ def track_quads():
     quads = []
     n = len(CIRCUIT)
     hw = TRACK_W / 2
+    cxm = sum(p["x"] for p in CIRCUIT) / n
+    czm = sum(p["z"] for p in CIRCUIT) / n
     i = 0
+    board_acc = 0.0
     while i < n:
         a = CIRCUIT[i]
         j = i + 1
@@ -269,44 +276,66 @@ def track_quads():
                    and CIRCUIT[j]["cmd"] == a["cmd"] and not (a["cmd"] == 0 and 90 <= CIRCUIT[j]["z"] <= 110)):
                 j += 1
         b = CIRCUIT[j % n]
-        step = j - i
         i = j
         hx, hz = b["x"] - a["x"], b["z"] - a["z"]
         hl = math.hypot(hx, hz) or 1.0
-        nx, nz = hz / hl, -hx / hl
+        ux, uz = hx / hl, hz / hl
+        nx, nz = uz, -ux          # right-hand normal
         ay, by = a["y"], b["y"]
+        ga = 0.0 if ay < 0.25 else ay
+        gb = 0.0 if by < 0.25 else by
 
         def edge(pt, y, off):
             return (pt["x"] + nx * off, y, pt["z"] + nz * off)
 
-        shade = "#3b3b3f" if int(a["s"] // 12) % 2 == 0 else "#38383c"
+        outer = 1.0 if ((a["x"] + nx * 20 - cxm) * nx + (a["z"] + nz * 20 - czm) * nz) > 0 else -1.0
+        base = 0x48 + int(6 * nx)
+        shade = "#%02x%02x%02x" % (base, base, base + 6)
+        # mown verge both sides
+        for sgn in (-1.0, 1.0):
+            quads.append(([edge(a, ga, sgn * hw), edge(b, gb, sgn * hw), edge(b, gb, sgn * (hw + 5.0)), edge(a, ga, sgn * (hw + 5.0))], "#79a865", "ground2"))
+        # asphalt
         quads.append(([edge(a, ay, -hw), edge(b, by, -hw), edge(b, by, hw), edge(a, ay, hw)], shade, "road"))
+        # rubbered racing line, toward the inside of corners
+        off = a["turn"] * 2.2
+        quads.append(([edge(a, ay + 0.02, off - 1.7), edge(b, by + 0.02, off - 1.7), edge(b, by + 0.02, off + 1.7), edge(a, ay + 0.02, off + 1.7)], "#3a3a41", "road"))
+        # white track-limit lines
+        for sgn in (-1.0, 1.0):
+            quads.append(([edge(a, ay + 0.03, sgn * hw), edge(b, by + 0.03, sgn * hw), edge(b, by + 0.03, sgn * (hw - 0.45)), edge(a, ay + 0.03, sgn * (hw - 0.45))], "#ececec", "road"))
         # bridge embankment sides
         if ay > 0.25 or by > 0.25:
-            for off in (-hw, hw):
-                quads.append(([edge(a, 0.0, off), edge(b, 0.0, off), edge(b, by, off), edge(a, ay, off)], "#2a2a2e", "wall"))
-        # kerbs and walls in corners
+            for offv in (-hw, hw):
+                quads.append(([edge(a, 0.0, offv), edge(b, 0.0, offv), edge(b, by, offv), edge(a, ay, offv)], "#5b5f56", "wall"))
         if a["turn"] != 0:
             col = "#e10600" if int(a["s"] // 8) % 2 == 0 else "#f4f4f4"
-            for off in (-hw, hw):
-                o2 = off - 1.6 if off < 0 else off + 1.6
-                quads.append(([edge(a, ay, off), edge(b, by, off), edge(b, by, o2), edge(a, ay, o2)], col, "kerb"))
-            gin = -hw - 1.6 if a["turn"] > 0 else hw + 1.6
-            gout = -hw - 14.0 if a["turn"] > 0 else hw + 14.0
-            quads.append(([edge(a, 0.0, gin), edge(b, 0.0, gin), edge(b, 0.0, gout), edge(a, 0.0, gout)], "#c9b98a", "ground2"))
-            outer = -hw - 3.2 if a["turn"] > 0 else hw + 3.2
-            quads.append(([edge(a, ay, outer), edge(b, by, outer), edge(b, by + 1.4, outer), edge(a, ay + 1.4, outer)], "#d9d9dc", "wall"))
-            quads.append(([edge(a, ay + 1.4, outer), edge(b, by + 1.4, outer), edge(b, by + 1.55, outer), edge(a, ay + 1.55, outer)], "#e10600", "wall"))
-        # start/finish line on the main straight near z=100
+            for offv in (-hw, hw):
+                o2 = offv - 1.9 if offv < 0 else offv + 1.9
+                quads.append(([edge(a, ay, offv), edge(b, by, offv), edge(b, by, o2), edge(a, ay, o2)], col, "kerb"))
+            gs = -1.0 if a["turn"] > 0 else 1.0          # outside of the turn
+            quads.append(([edge(a, 0.0, gs * (hw + 1.9)), edge(b, 0.0, gs * (hw + 1.9)), edge(b, 0.0, gs * (hw + 17.0)), edge(a, 0.0, gs * (hw + 17.0))], "#cbbb8e", "ground2"))
+            bo = gs * (hw + 17.5)
+            bcol = "#e10600" if int(a["s"] // 6) % 2 == 0 else "#f2f2f2"
+            quads.append(([edge(a, 0.0, bo), edge(b, 0.0, bo), edge(b, 1.4, bo), edge(a, 1.4, bo)], bcol, "wall"))
+            quads.append(([edge(a, 1.4, bo), edge(b, 1.4, bo), edge(b, 1.4, bo + gs * 1.2), edge(a, 1.4, bo + gs * 1.2)], "#d8d8d8", "wall"))
+        else:
+            board_acc += hl
+            if board_acc >= 34.0 and a["cmd"] != 0:
+                board_acc = 0.0
+                bo = outer * (hw + 7.5)
+                p0 = (a["x"] + nx * bo, 0.0, a["z"] + nz * bo)
+                p1 = (a["x"] + nx * bo + ux * 11.0, 0.0, a["z"] + nz * bo + uz * 11.0)
+                quads.append(([p0, p1, (p1[0], 1.9, p1[2]), (p0[0], 1.9, p0[2])], "#f4f4f4", "wall"))
+                quads.append(([(p0[0], 0.55, p0[2]), (p1[0], 0.55, p1[2]), (p1[0], 1.1, p1[2]), (p0[0], 1.1, p0[2])], "#e10600", "wall"))
+                quads.append(([(p0[0], 0.0, p0[2]), (p1[0], 0.0, p1[2]), (p1[0], 0.35, p1[2]), (p0[0], 0.35, p0[2])], "#2a2a2e", "wall"))
         if a["cmd"] == 0 and 98 <= a["z"] < 102:
             for k in range(6):
-                for j in range(2):
-                    col = "#111111" if (k + j) % 2 == 0 else "#ffffff"
+                for jj in range(2):
+                    col = "#111111" if (k + jj) % 2 == 0 else "#ffffff"
                     o0 = -hw + k * TRACK_W / 6
                     o1 = o0 + TRACK_W / 6
-                    ya = ay
-                    quads.append(([edge(a, ya, o0), (a["x"] + nx * o0 + hx / hl * (1.2 * j + 1.2), ya, a["z"] + nz * o0 + hz / hl * (1.2 * j + 1.2)),
-                                   (a["x"] + nx * o1 + hx / hl * (1.2 * j + 1.2), ya, a["z"] + nz * o1 + hz / hl * (1.2 * j + 1.2)), edge(a, ya, o1)], col, "kerb"))
+                    d0 = 1.2 * jj + 1.2
+                    quads.append(([edge(a, ay, o0), (a["x"] + nx * o0 + ux * d0, ay, a["z"] + nz * o0 + uz * d0),
+                                   (a["x"] + nx * o1 + ux * d0, ay, a["z"] + nz * o1 + uz * d0), edge(a, ay, o1)], col, "kerb"))
     return quads
 
 
@@ -315,7 +344,7 @@ def ground_bands(x0, x1, z0, z1, step=32.0):
     z = z0
     k = 0
     while z < z1:
-        col = "#5a8a4b" if k % 2 == 0 else "#558347"
+        col = "#6b9c55" if k % 2 == 0 else "#65944f"
         quads.append(([(x0, 0.0, z), (x1, 0.0, z), (x1, 0.0, z + step), (x0, 0.0, z + step)], col, "ground"))
         z += step
         k += 1
@@ -344,7 +373,7 @@ OFFSET = [GRID_PARAM[i] * LAP_TIME[i] for i in range(N_CARS)]
 CAR_SYMBOL = open(os.path.join(OUT, "f1_car_symbol.xml")).read()
 _m = re.search(r'viewBox="([\d. ]+)"', CAR_SYMBOL)
 _SYM_W, _SYM_H = float(_m.group(1).split()[2]), float(_m.group(1).split()[3])
-CAR_L = 4.6          # world units, nose to tail
+CAR_L = 5.4          # world units, nose to tail
 CAR_SX, CAR_SY = 1.30, 0.85   # lengthen and slim the cartoon proportions toward a real F1 car
 _k = CAR_L / (_SYM_H * CAR_SX)
 CAR_W_UNITS = _SYM_W * _k * CAR_SY
@@ -526,22 +555,37 @@ def render(name, H, cam, bands=None, sky=False, extras_world=None, extras_screen
     out = ['<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 %d %d" width="%d" height="%d" role="img" aria-label="%s">' % (W, H, W, H, title or "Racing")]
     out.append("<defs>")
     out.append("")  # placeholder for the style block
+    out.append('<radialGradient id="sun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff7d6" stop-opacity="0.95"/><stop offset="0.35" stop-color="#fff2c4" stop-opacity="0.45"/><stop offset="1" stop-color="#fff2c4" stop-opacity="0"/></radialGradient>')
     out.append(CAR_SYMBOL)
     out.append('<clipPath id="frame"><rect x="0" y="0" width="%d" height="%d" rx="16" ry="16"/></clipPath>' % (W, H))
-    out.append('<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9dcef"/><stop offset="1" stop-color="#f3f6f9"/></linearGradient>')
+    out.append('<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fc3e6"/><stop offset="0.7" stop-color="#d9e7f4"/><stop offset="1" stop-color="#f1f5f9"/></linearGradient>')
     out.append('<linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eef2" stop-opacity="0.9"/><stop offset="1" stop-color="#e9eef2" stop-opacity="0"/></linearGradient>')
-    out.append('<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0.18"/><stop offset="0.35" stop-color="#000" stop-opacity="0"/></linearGradient>')
+    out.append('<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0.10"/><stop offset="0.35" stop-color="#000" stop-opacity="0"/></linearGradient>')
     out.append(defs)
     out.append("</defs>")
     out.append('<g clip-path="url(#frame)">')
     if sky:
         out.append('<rect width="%d" height="%d" fill="url(#sky)"/>' % (W, H))
     else:
-        out.append('<rect width="%d" height="%d" fill="#578548"/>' % (W, H))
+        out.append('<rect width="%d" height="%d" fill="#689851"/>' % (W, H))
     out.extend(ground_svg)
     if sky:
         hz = cam.cy - cam.f * (0.0 - cam.pos[1]) / 100000.0
-        out.append('<rect x="0" y="%s" width="%d" height="60" fill="url(#haze)"/>' % (fmt(hz - 2), W))
+        # sun and two ranges of hills just above the horizon
+        out.insert(len(out) - len(ground_svg), '<circle cx="%d" cy="%s" r="120" fill="url(#sun)"/>' % (int(W * 0.78), fmt(hz - 40)))
+        hills = []
+        for rng_seed, amp, base_h, col in ((3, 14.0, 30.0, "#7f9f8f"), (5, 10.0, 16.0, "#5f8a5a")):
+            r2 = random.Random(rng_seed)
+            pts = []
+            x = -40.0
+            while x <= W + 40:
+                pts.append((x, hz + 4 - base_h - amp * (0.5 + 0.5 * math.sin(x / 90.0 + r2.random() * 0.4)) - r2.uniform(0, 4)))
+                x += 40.0
+            d = "M-40,%s " % fmt(hz + 6) + " ".join("L%s,%s" % (fmt(px), fmt(py)) for px, py in pts) + " L%d,%s Z" % (W + 40, fmt(hz + 6))
+            hills.append('<path d="%s" fill="%s"/>' % (d, col))
+        for hsvg in hills:
+            out.insert(len(out) - len(ground_svg), hsvg)
+        out.append('<rect x="0" y="%s" width="%d" height="70" fill="url(#haze)"/>' % (fmt(hz - 6), W))
     out.extend(far_q)
     out.append(far_cars)
     out.extend(band_q)
@@ -561,36 +605,78 @@ def render(name, H, cam, bands=None, sky=False, extras_world=None, extras_screen
 
 
 TREES = []
+BUSHES = []
 _rng = random.Random(11)
 _pts2d = [(p["x"], p["z"]) for p in CIRCUIT]
-while len(TREES) < 70:
+
+
+def _dist_to_track(tx, tz):
+    return min(math.hypot(tx - a, tz - b) for a, b in _pts2d[::2])
+
+
+def _near_main_straight(tx, tz):
+    return -46.0 < tx < 50.0 and 85.0 < tz < 545.0
+
+
+# forest clusters around the outside of the circuit
+_centres = [(_rng.uniform(-360.0, 820.0), _rng.uniform(-160.0, 880.0)) for _ in range(26)]
+while len(TREES) < 260:
+    cx, cz = _rng.choice(_centres)
+    tx = cx + _rng.gauss(0.0, 38.0)
+    tz = cz + _rng.gauss(0.0, 38.0)
+    d = _dist_to_track(tx, tz)
+    if 24.0 < d < 190.0 and not _near_main_straight(tx, tz):
+        TREES.append((tx, tz, _rng.uniform(5.5, 10.5), _rng.random()))
+# roadside bushes just beyond the verge
+while len(BUSHES) < 170:
     tx = _rng.uniform(-330.0, 780.0)
     tz = _rng.uniform(-120.0, 840.0)
-    dmin = min(math.hypot(tx - a, tz - b) for a, b in _pts2d[::3])
-    if 26.0 < dmin < 140.0 and not (-40.0 < tx < 45.0 and 90.0 < tz < 540.0):
-        TREES.append((tx, tz, _rng.uniform(5.0, 8.5)))
+    d = _dist_to_track(tx, tz)
+    if 13.5 < d < 24.0 and not _near_main_straight(tx, tz):
+        BUSHES.append((tx, tz, _rng.uniform(1.6, 2.8), _rng.random()))
 
 
 def tree_items(cam):
-    """Return list of (depth, svg) for trees visible to this camera."""
+    """Return list of (depth, svg) for foliage visible to this camera."""
     items = []
-    for tx, tz, h in TREES:
+    for tx, tz, h, v in TREES:
         base = cam.project((tx, 0.0, tz))
         top = cam.project((tx, h, tz))
         if base is None or top is None:
             continue
-        if base[0] < -40 or base[0] > W + 40 or top[1] > 2000 or base[1] < -40:
+        if base[0] < -60 or base[0] > W + 60 or base[1] < -60:
             continue
-        r = cam.f * (h * 0.55) / top[2]
-        if r < 0.8:
+        r = cam.f * (h * 0.52) / top[2]
+        if r < 0.7:
             continue
-        trunk_w = max(0.6, cam.f * 0.5 / base[2])
-        svg = ('<rect x="%s" y="%s" width="%s" height="%s" fill="#4a3320"/>'
-               '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="#2f5e2a"/>'
-               '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="#3d7a35"/>'
-               % (fmt(base[0] - trunk_w / 2), fmt(top[1]), fmt(trunk_w), fmt(max(0.5, base[1] - top[1])),
-                  fmt(top[0]), fmt(top[1]), fmt(r), fmt(r * 0.95),
-                  fmt(top[0] - r * 0.2), fmt(top[1] - r * 0.2), fmt(r * 0.6), fmt(r * 0.55)))
+        tw = max(0.6, cam.f * 0.55 / base[2])
+        sh = cam.f * (h * 0.5) / base[2]
+        g1, g2, g3 = ("#2c5a29", "#3d7d36", "#5a9d4c") if v < 0.55 else ("#2f5f2a", "#45853a", "#66a955")
+        svg = ('<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="#000" opacity="0.18"/>'
+               '<rect x="%s" y="%s" width="%s" height="%s" fill="#4a3320"/>'
+               '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="%s"/>'
+               '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="%s"/>'
+               '<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="%s"/>'
+               % (fmt(base[0] + sh * 0.5), fmt(base[1]), fmt(sh), fmt(sh * 0.35),
+                  fmt(base[0] - tw / 2), fmt(top[1]), fmt(tw), fmt(max(0.5, base[1] - top[1])),
+                  fmt(top[0]), fmt(top[1] + r * 0.15), fmt(r), fmt(r * 0.95), g1,
+                  fmt(top[0] - r * 0.15), fmt(top[1] - r * 0.1), fmt(r * 0.78), fmt(r * 0.72), g2,
+                  fmt(top[0] - r * 0.3), fmt(top[1] - r * 0.3), fmt(r * 0.45), fmt(r * 0.4), g3))
+        items.append((base[2], svg))
+    for tx, tz, h, v in BUSHES:
+        base = cam.project((tx, 0.0, tz))
+        top = cam.project((tx, h, tz))
+        if base is None or top is None:
+            continue
+        if base[0] < -40 or base[0] > W + 40 or base[1] < -40:
+            continue
+        r = cam.f * (h * 0.9) / base[2]
+        if r < 0.6:
+            continue
+        col = "#35692f" if v < 0.5 else "#3f7a37"
+        svg = ('<ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="%s"/><ellipse cx="%s" cy="%s" rx="%s" ry="%s" fill="#5b9a4b"/>'
+               % (fmt(base[0]), fmt(base[1] - r * 0.3), fmt(r), fmt(r * 0.6), col,
+                  fmt(base[0] - r * 0.25), fmt(base[1] - r * 0.5), fmt(r * 0.5), fmt(r * 0.3)))
         items.append((base[2], svg))
     return items
 
