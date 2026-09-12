@@ -45,8 +45,8 @@ Verify against acceptance tests and evaluations before it ships.
 | [Stale-state data generator](https://github.com/riptide-06/Synthetic-Data-Generator) | Algoverse: deterministic generator for the 5,000-example stale-state evaluation set, with schema invariants and an invariant test suite. | Python (standard library), pytest | Racing |
 | [J-Lens stale-state probe](https://github.com/riptide-06/task4-jlens-probe) | Algoverse: Jacobian-lens probing pipeline for Qwen2.5-7B-Instruct. Finds the correct state encoded internally in 137 of 137 stale-output failures. | Python, PyTorch, transformers, Colab A100 | Racing |
 | [CX-LLM-Bench](https://github.com/riptide-06/cx-llm-bench) | Benchmark behind the first-author paper: open-weights and proprietary LLMs on intent classification and summarization for privacy-constrained contact centers. | Python, paired bootstrap CIs, six model APIs | Racing |
-| [Skape filesystem agent](https://github.com/riptide-06/skape-filesystem-agent) | Skape's first reference agent: OpenAI Agents SDK plus the MCP filesystem server, hardened for sandboxed runs. | Python, OpenAI Agents SDK, MCP, Node | Racing |
-| [Skape GitHub triage agent](https://github.com/riptide-06/skape-pydanticai-github-agent) | PydanticAI agent on GitHub's hosted MCP endpoint that proposes closable issues as structured output. | Python, PydanticAI, GitHub MCP, GitHub Models | Racing |
+| [Stealth Startup filesystem agent](https://github.com/riptide-06/stealth-startup-filesystem-agent) | Stealth Startup's first reference agent: OpenAI Agents SDK plus the MCP filesystem server, hardened for sandboxed runs. | Python, OpenAI Agents SDK, MCP, Node | Racing |
+| [Stealth Startup GitHub triage agent](https://github.com/riptide-06/stealth-startup-pydanticai-github-agent) | PydanticAI agent on GitHub's hosted MCP endpoint that proposes closable issues as structured output. | Python, PydanticAI, GitHub MCP, GitHub Models | Racing |
 
 </div>
 
