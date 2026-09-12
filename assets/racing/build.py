@@ -18,6 +18,7 @@ Writes assets/racing/*.svg.
 import math
 import os
 import random
+import re
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 W = 1000
@@ -290,6 +291,9 @@ def track_quads():
             for off in (-hw, hw):
                 o2 = off - 1.6 if off < 0 else off + 1.6
                 quads.append(([edge(a, ay, off), edge(b, by, off), edge(b, by, o2), edge(a, ay, o2)], col, "kerb"))
+            gin = -hw - 1.6 if a["turn"] > 0 else hw + 1.6
+            gout = -hw - 14.0 if a["turn"] > 0 else hw + 14.0
+            quads.append(([edge(a, 0.0, gin), edge(b, 0.0, gin), edge(b, 0.0, gout), edge(a, 0.0, gout)], "#c9b98a", "ground2"))
             outer = -hw - 3.2 if a["turn"] > 0 else hw + 3.2
             quads.append(([edge(a, ay, outer), edge(b, by, outer), edge(b, by + 1.4, outer), edge(a, ay + 1.4, outer)], "#d9d9dc", "wall"))
             quads.append(([edge(a, ay + 1.4, outer), edge(b, by + 1.4, outer), edge(b, by + 1.55, outer), edge(a, ay + 1.55, outer)], "#e10600", "wall"))
@@ -311,7 +315,7 @@ def ground_bands(x0, x1, z0, z1, step=32.0):
     z = z0
     k = 0
     while z < z1:
-        col = "#4f7d3f" if k % 2 == 0 else "#487439"
+        col = "#5a8a4b" if k % 2 == 0 else "#558347"
         quads.append(([(x0, 0.0, z), (x1, 0.0, z), (x1, 0.0, z + step), (x0, 0.0, z + step)], col, "ground"))
         z += step
         k += 1
@@ -337,26 +341,26 @@ for i in range(N_CARS):
 OFFSET = [GRID_PARAM[i] * LAP_TIME[i] for i in range(N_CARS)]
 
 
+CAR_SYMBOL = open(os.path.join(OUT, "f1_car_symbol.xml")).read()
+_m = re.search(r'viewBox="([\d. ]+)"', CAR_SYMBOL)
+_SYM_W, _SYM_H = float(_m.group(1).split()[2]), float(_m.group(1).split()[3])
+CAR_L = 4.6          # world units, nose to tail
+CAR_SX, CAR_SY = 1.30, 0.85   # lengthen and slim the cartoon proportions toward a real F1 car
+_k = CAR_L / (_SYM_H * CAR_SX)
+CAR_W_UNITS = _SYM_W * _k * CAR_SY
+CAR_H_UNITS = CAR_L
+
+
 def car_sprite(i):
     main, accent = LIVERIES[i]
     num = NUMBERS[i]
     return (
         '<g id="car%d">'
-        '<ellipse cx="0.15" cy="0.35" rx="2.7" ry="1.35" fill="#000" opacity="0.32"/>'
-        '<rect x="-1.9" y="-1.15" width="0.75" height="0.5" rx="0.12" fill="#141414"/>'
-        '<rect x="-1.9" y="0.65" width="0.75" height="0.5" rx="0.12" fill="#141414"/>'
-        '<rect x="1.0" y="-1.1" width="0.65" height="0.45" rx="0.12" fill="#141414"/>'
-        '<rect x="1.0" y="0.65" width="0.65" height="0.45" rx="0.12" fill="#141414"/>'
-        '<rect x="-2.35" y="-1.05" width="0.42" height="2.1" rx="0.1" fill="%s" stroke="#000" stroke-width="0.06"/>'
-        '<rect x="1.95" y="-1.05" width="0.36" height="2.1" rx="0.1" fill="%s" stroke="#000" stroke-width="0.06"/>'
-        '<rect x="-1.3" y="-0.8" width="1.7" height="1.6" rx="0.35" fill="%s" stroke="#000" stroke-width="0.07"/>'
-        '<rect x="-2.0" y="-0.42" width="4.05" height="0.84" rx="0.42" fill="%s" stroke="#000" stroke-width="0.07"/>'
-        '<rect x="-2.0" y="-0.1" width="4.05" height="0.2" fill="%s" opacity="0.9"/>'
-        '<circle cx="-0.25" cy="0" r="0.3" fill="#111"/>'
-        '<circle cx="-0.25" cy="0" r="0.17" fill="%s"/>'
-        '<text x="-0.55" y="-0.95" font-family="Arial, Helvetica, sans-serif" font-size="0.62" font-weight="700" fill="%s" text-anchor="middle">%d</text>'
+        '<ellipse cx="0.2" cy="0.3" rx="%.2f" ry="%.2f" fill="#000" opacity="0.3"/>'
+        '<g transform="rotate(90)"><use href="#f1body" xlink:href="#f1body" x="%.3f" y="%.3f" width="%.3f" height="%.3f" color="%s"/></g>'
+        '<text x="0.7" y="0.27" font-family="Arial, Helvetica, sans-serif" font-size="0.72" font-weight="700" fill="%s" stroke="#000" stroke-width="0.05" text-anchor="middle">%d</text>'
         '</g>'
-    ) % (i, accent, accent, main, main, accent, accent, accent, num)
+    ) % (i, CAR_L * 0.5, CAR_W_UNITS * 0.5, -CAR_W_UNITS / 2, -CAR_H_UNITS / 2, CAR_W_UNITS, CAR_H_UNITS, main, accent, num)
 
 
 def car_paths(cam, i, H, bands=None):
@@ -508,8 +512,8 @@ def render(name, H, cam, bands=None, sky=False, extras_world=None, extras_screen
     for depth, svg in tree_items(cam):
         drawn.append((depth, "prop", svg))
     drawn.sort(key=lambda d: -d[0])
-    ground_svg = [s for d, k, s in drawn if k == "ground"]
-    rest = [(d, k, s) for d, k, s in drawn if k != "ground"]
+    ground_svg = [s for d, k, s in drawn if k == "ground"] + [s for d, k, s in drawn if k == "ground2"]
+    rest = [(d, k, s) for d, k, s in drawn if k not in ("ground", "ground2")]
     if bands:
         far_b, near_b = bands
         far_q = [s for d, k, s in rest if d > far_b]
@@ -522,15 +526,18 @@ def render(name, H, cam, bands=None, sky=False, extras_world=None, extras_screen
     out = ['<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 %d %d" width="%d" height="%d" role="img" aria-label="%s">' % (W, H, W, H, title or "Racing")]
     out.append("<defs>")
     out.append("")  # placeholder for the style block
+    out.append(CAR_SYMBOL)
+    out.append('<clipPath id="frame"><rect x="0" y="0" width="%d" height="%d" rx="16" ry="16"/></clipPath>' % (W, H))
     out.append('<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9dcef"/><stop offset="1" stop-color="#f3f6f9"/></linearGradient>')
     out.append('<linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eef2" stop-opacity="0.9"/><stop offset="1" stop-color="#e9eef2" stop-opacity="0"/></linearGradient>')
     out.append('<linearGradient id="vig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0.18"/><stop offset="0.35" stop-color="#000" stop-opacity="0"/></linearGradient>')
     out.append(defs)
     out.append("</defs>")
+    out.append('<g clip-path="url(#frame)">')
     if sky:
         out.append('<rect width="%d" height="%d" fill="url(#sky)"/>' % (W, H))
     else:
-        out.append('<rect width="%d" height="%d" fill="#4a7639"/>' % (W, H))
+        out.append('<rect width="%d" height="%d" fill="#578548"/>' % (W, H))
     out.extend(ground_svg)
     if sky:
         hz = cam.cy - cam.f * (0.0 - cam.pos[1]) / 100000.0
@@ -543,6 +550,7 @@ def render(name, H, cam, bands=None, sky=False, extras_world=None, extras_screen
     out.append(extras_screen)
     if not sky:
         out.append('<rect width="%d" height="%d" fill="url(#vig)"/>' % (W, H))
+    out.append("</g>")
     out.append("</svg>")
     style = "<style>" + "".join(".%s{fill:%s;stroke:%s;stroke-width:0.7;stroke-linejoin:round}" % (c, f, f) for f, c in CLASSES.items()) + "</style>"
     out[2] = style
@@ -592,8 +600,8 @@ def sector_points(cmds):
 
 
 def header():
-    H = 300
-    cam = Camera((0.0, 15.0, 40.0), (0.0, 3.0, 420.0), 640.0, W / 2, 112.0)
+    H = 240
+    cam = Camera((0.0, 15.0, 40.0), (0.0, 3.0, 420.0), 640.0, W / 2, 62.0)
     # occluder band: the crest of the bridge (z 260..340 from a camera at z=40)
     bands = (300.0, 215.0)
     extras = []
@@ -616,16 +624,12 @@ def header():
         lights += ('<circle cx="%s" cy="%s" r="%s" fill="#3a0000" stroke="#111" stroke-width="0.6">'
                    '<animate attributeName="fill" values="#3a0000;#3a0000;#ff1a1a;#ff1a1a;#3a0000;#3a0000" keyTimes="0;%.3f;%.3f;0.42;0.43;1" calcMode="discrete" dur="20s" repeatCount="indefinite"/></circle>'
                    % (fmt(q[0]), fmt(q[1]), fmt(r), 0.05 + 0.06 * k, 0.05 + 0.06 * k + 0.001))
-    screen = (
-        '<text x="500" y="62" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="2" fill="#0b0b0b">TARUN CHANDRA</text>'
-        '<text x="500" y="90" text-anchor="middle" font-family="Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" letter-spacing="3" fill="#0b0b0b">AI-NATIVE PRODUCT BUILDER</text>'
-        '<rect x="440" y="98" width="120" height="3" fill="#e10600"/>'
-    ) + lights
+    screen = lights
     render("header.svg", H, cam, bands=bands, sky=True, extras_world=extras, extras_screen=screen,
            ground=(-420.0, 420.0, 40.0, 1600.0, 24.0), title="Race start on the main straight")
 
 
-def divider(name, cmds, offset, H=190, title="Sector"):
+def divider(name, cmds, offset, H=180, title="Sector"):
     pts = sector_points(cmds)
     cam = fit_camera(offset, pts, H, margin=22)
     bbox = (min(p["x"] for p in CIRCUIT) - 200, max(p["x"] for p in CIRCUIT) + 200,
@@ -634,9 +638,10 @@ def divider(name, cmds, offset, H=190, title="Sector"):
 
 
 def underpass():
-    H = 210
-    pts = sector_points([13, 14]) + [(0.0, 9.0, 300.0), (0.0, 0.0, 250.0), (0.0, 0.0, 350.0)]
-    cam = fit_camera((30.0, 75.0, -280.0), pts, H, margin=22)
+    H = 200
+    pts = [(p["x"], p["y"], p["z"]) for p in CIRCUIT if p["cmd"] == 14 and -40.0 <= p["x"] <= 70.0]
+    pts += [(0.0, 9.0, 300.0), (0.0, 0.0, 232.0), (0.0, 0.0, 368.0), (0.0, 12.0, 300.0)]
+    cam = fit_camera((170.0, 42.0, -30.0), pts, H, margin=20)
     # bands around the bridge deck: deck points project near depth of (0, 9, 300)
     d = cam.project((0.0, 9.0, 300.0))[2]
     bands = (d + 12.0, d - 12.0)
@@ -652,7 +657,7 @@ def footer():
     extras += box_quads(-34.0, -16.0, 0.0, 9.0, 130.0, 520.0, "#3a3a42", "#26262c", "#2f2f36")
     extras += stand_rows(-15.95, 130.0, 520.0, [1.6, 3.2, 4.8, 6.4, 8.0])
     extras += box_quads(8.0, 9.2, 0.0, 1.1, 110.0, 330.0, "#e6e6e6", "#cfcfcf")
-    screen = tower_svg(20, 20, rows=8)
+    screen = tower_svg(18, 16, rows=6)
     render("footer.svg", H, cam, sky=True, extras_world=extras, extras_screen=screen,
            ground=(-500.0, 500.0, -300.0, 1600.0, 24.0), title="Final corner onto the main straight, with live timing")
 

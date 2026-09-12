@@ -1,0 +1,177 @@
+<!-- Top-down F1 car adapted from "Top Down F1 Cars" by EdSquare, OpenGameArt.org, CC0 1.0 (public domain).
+     Source file kept alongside as RacingCars_F1_EdSquare_CC0.svg. Body colour replaced with currentColor so one
+     symbol serves every livery. Nose points -y in symbol space. -->
+<symbol id="f1body" preserveAspectRatio="none" viewBox="0.00 0.00 173.83 217.52" overflow="visible"><g transform="translate(841.73296,-158.80885)"><g
+      >
+      <g
+         transform="translate(-194,0)"
+        >
+        <g
+          >
+          <rect
+             style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.39158487;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            
+             width="45.561516"
+             height="51.802059"
+             x="-521.22626"
+             y="307.48343"
+             rx="11.469292"
+             ry="9.4962492" />
+          <rect
+             ry="9.4962492"
+             rx="11.469292"
+             y="307.48343"
+             x="-646.03717"
+             height="51.802059"
+             width="45.561516"
+            
+             style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.39158487;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <rect
+             ry="3.6799395"
+             rx="5.7524066"
+             y="328.66843"
+             x="-619.17896"
+             height="6.5953836"
+             width="114.95393"
+            
+             style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.64516091;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        </g>
+        <g
+          >
+          <rect
+             style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.11198807;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            
+             width="41.302536"
+             height="48.110401"
+             x="-637.09985"
+             y="186.78764"
+             rx="10.397169"
+             ry="8.8195019" />
+          <rect
+             ry="8.8195019"
+             rx="10.397169"
+             y="186.78764"
+             x="-524.48639"
+             height="48.110401"
+             width="41.302536"
+            
+             style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.11198807;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <rect
+             style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.13326502;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            
+             width="115.46582"
+             height="4.2706685"
+             x="-617.16559"
+             y="208.42383"
+             rx="5.7780223"
+             ry="2.3828487" />
+          <rect
+             ry="2.3828487"
+             rx="5.7780223"
+             y="436.80994"
+             x="-502.59409"
+             height="4.2706685"
+             width="115.46582"
+            
+             style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.13326502;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            
+            
+             transform="matrix(0.9182621,0.39597313,-0.39597313,0.9182621,0,0)" />
+          <rect
+             transform="matrix(-0.9182621,0.39597313,0.39597313,0.9182621,0,0)"
+            
+            
+             style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.13326502;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            
+             width="115.46582"
+             height="4.2706685"
+             x="527.35181"
+             y="-7.0145965"
+             rx="5.7780223"
+             ry="2.3828487" />
+        </g>
+      </g>
+      <path
+        
+         d="m -727.78116,220.68586 0,125.20849 c 0,0.0209 -0.0277,0.0378 -0.0619,0.0378 l -53.75406,0 c -0.0342,0 -0.0619,-0.0168 -0.0619,-0.0378 l 0,-125.20849 c 0,-0.0209 0.0277,-0.0377 0.0619,-0.0377 l 53.75409,0 c 0.0342,0 0.0619,0.0168 0.0619,0.0377 z"
+         style="opacity:1;fill:currentColor;fill-opacity:1;stroke:#000000;stroke-width:1.2783767;stroke-opacity:1"
+         />
+      <path
+         style="opacity:1;fill:currentColor;fill-opacity:1;stroke:#000000;stroke-width:1.02499747;stroke-opacity:1"
+         d="m -791.17516,247.49356 73.31121,0 c 24.46747,0 44.16511,0.8478 44.16511,0.8478 l 0,26.36043 c 0,18.9157 -19.69764,46.9809 -44.16511,46.9809 l -73.31121,0 c -24.46747,0 -44.16511,-28.0652 -44.16511,-46.9809 l 0,-27.16275 c 0,0 19.69764,-0.0455 44.16511,-0.0455 z"
+        
+        
+         />
+      <path
+        
+         style="opacity:1;fill:#c4c6c3;fill-opacity:1"
+         d="m -835.09111,265.69429 160.74201,0 c 0.0268,0 0.0485,0.005 0.0485,0.0115 l 0,9.98061 c 0,0.006 -0.0216,0.0115 -0.0485,0.0115 l -160.74201,0 c -0.0268,0 -0.0485,-0.005 -0.0485,-0.0115 l 0,-9.98061 c 0,-0.006 0.0216,-0.0115 0.0485,-0.0115 z"
+         />
+      <path
+        
+         d="m -835.09111,247.69429 160.74201,0 c 0.0268,0 0.0485,0.005 0.0485,0.0115 l 0,9.98061 c 0,0.006 -0.0216,0.0115 -0.0485,0.0115 l -160.74201,0 c -0.0268,0 -0.0485,-0.005 -0.0485,-0.0115 l 0,-9.98061 c 0,-0.006 0.0216,-0.0115 0.0485,-0.0115 z"
+         style="opacity:1;fill:#c4c6c3;fill-opacity:1"
+         />
+      <path
+        
+         d="m -817.26287,342.84264 21.62467,0 9.22662,3.20926 63.38287,0 7.22083,-3.20926 24.0317,0 c 0.0209,0 0.0378,0.0169 0.0378,0.0378 l 0,32.81934 c 0,0.0209 -0.0168,0.0378 -0.0378,0.0378 l -125.48669,0 c -0.0209,0 -0.0378,-0.0169 -0.0378,-0.0378 l 0,-32.81934 c 0,-0.0209 0.0168,-0.0378 0.0378,-0.0378 z"
+         style="opacity:1;fill:#c4c6c3;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+        
+         />
+      <path
+         style="opacity:1;fill:#c4c6c3;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+         d="m -817.26287,164.84264 125.48669,0 c 0.0209,0 0.0378,0.0169 0.0378,0.0378 l 0,32.81934 c 0,0.0209 -0.0168,0.0378 -0.0378,0.0378 l -125.48669,0 c -0.0209,0 -0.0378,-0.0169 -0.0378,-0.0378 l 0,-32.81934 c 0,-0.0209 0.0168,-0.0378 0.0378,-0.0378 z"
+        
+         />
+      <path
+        
+        
+        
+         d="m -726.89533,205.73694 11.91377,65.66755 c 4.55231,25.09194 -21.13411,46.03166 -39.1057,46.03166 l -0.78935,0 c -17.97159,0 -43.1113,-20.89341 -38.82206,-46.03166 l 11.20462,-65.66755 c 2.94832,-17.27941 4.18777,-46.0974 27.21758,-46.03165 26.38121,1.06925 25.3176,29.14573 28.38114,46.03165 z"
+         style="opacity:1;fill:currentColor;fill-opacity:1;stroke:#000000;stroke-width:1.79265141;stroke-opacity:1" />
+      <g
+         transform="translate(-194,0)"
+        >
+        <path
+          
+          
+          
+           d="m -583.75172,233.39389 46.22692,0 c 0,0 0.21766,9.04567 0.21766,20.28177 l 0,28.93343 c 0,11.2361 -10.2181,20.28177 -22.91055,20.28177 l -0.55748,0 c -12.69245,0 -22.91056,-9.04567 -22.91056,-20.28177 l 0,-28.93343 c 0,-11.2361 -0.066,-20.28177 -0.066,-20.28177 z"
+           style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+        <g
+          >
+          <circle
+             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.02887559;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            
+             cx="-560.42548"
+             cy="278.21237"
+             r="19.70001" />
+          <path
+             style="opacity:1;fill:#80b3ff;fill-opacity:1"
+             d="m -543.84575,268.56789 c -1.92139,5.27698 -5.69971,-2.99288 -16.57973,-2.99288 -10.88002,0 -14.67263,7.97749 -16.57973,2.99288 2.20877,-2.88212 5.69971,-9.48821 16.57973,-9.48821 10.88002,0 14.92888,7.05068 16.57973,9.48821 z"
+            
+            
+             />
+        </g>
+      </g>
+      <g
+        >
+        <g
+          
+           transform="translate(-194,0)">
+          <path
+             transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
+             style="opacity:0.5;fill:#000000;fill-opacity:1"
+             d="m -284.01146,510.06346 c 14.70816,-11.6074 25.02565,-5.96575 35.2134,0.18558 l 3.71148,37.20661 -37.25471,-3.58777 c -9.88461,-14.43781 -8.73996,-25.12781 -1.67017,-33.80442 z"
+            
+            
+             />
+        </g>
+        <circle
+           r="5.7299695"
+           cy="195.12656"
+           cx="-754.36499"
+          
+           style="opacity:1;fill:#ffffff;fill-opacity:1" />
+      </g>
+    </g></g></symbol>
