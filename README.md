@@ -1,26 +1,12 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:f4f4f4,45:ffffff,100:e10600&height=220&section=header&text=Tarun%20Chandra&fontSize=64&fontColor=0b0b0b&animation=fadeIn&desc=AI-native%20product%20builder&descAlignY=72&descSize=20&descColor=0b0b0b" width="100%" alt="Tarun Chandra, AI-native product builder" />
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/header.svg" width="100%" alt="Tarun Chandra, AI-native product builder. Race start on the main straight." />
 
-<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=20&pause=1000&color=E10600&center=true&vCenter=true&width=700&lines=Ships+by+orchestrating+coding+agents;Verifies+with+acceptance+tests+and+evals;Two+papers+under+review+at+NeurIPS+2026+workshops;UC+Santa+Cruz%2C+June+2027" alt="Ships by orchestrating coding agents. Verifies with acceptance tests and evals. Two papers under review at NeurIPS 2026 workshops. UC Santa Cruz, June 2027." />
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/tandem-drift.svg" width="100%" alt="Two cars tandem drifting around a track" />
+**Ships by orchestrating coding agents. Verifies with acceptance tests and evals. Two papers under review at NeurIPS 2026 workshops. UC Santa Cruz, June 2027.**
 
 </div>
 
 <div align="center">
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/riptide-06/riptide-06/output/github-snake-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/riptide-06/riptide-06/output/github-snake.svg" />
-  <img src="https://raw.githubusercontent.com/riptide-06/riptide-06/output/github-snake.svg" alt="Contribution snake taking the racing line" />
-</picture>
-
-</div>
-
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 🏁 Pit wall: how I build
 
@@ -28,11 +14,11 @@ Spec each change first: what it must do and the acceptance test that proves it.<
 Let coding agents draft the implementation.<br/>
 Verify against acceptance tests and evaluations before it ships.
 
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/t1-t2.svg" width="100%" alt="Turns 1 and 2" />
+
 </div>
 
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 🏎️ Starting grid: selected work
 
@@ -48,11 +34,11 @@ Verify against acceptance tests and evaluations before it ships.
 | [Stealth Startup filesystem agent](https://github.com/riptide-06/stealth-startup-filesystem-agent) | Stealth Startup's first reference agent: OpenAI Agents SDK plus the MCP filesystem server, hardened for sandboxed runs. | Python, OpenAI Agents SDK, MCP, Node | Racing |
 | [Stealth Startup GitHub triage agent](https://github.com/riptide-06/stealth-startup-pydanticai-github-agent) | PydanticAI agent on GitHub's hosted MCP endpoint that proposes closable issues as structured output. | Python, PydanticAI, GitHub MCP, GitHub Models | Racing |
 
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/t3-esses.svg" width="100%" alt="Turn 3 esses" />
+
 </div>
 
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 🏆 Sprint races: hackathons
 
@@ -69,22 +55,22 @@ Devpost profile: [devpost.com/n-tarun2022](https://devpost.com/n-tarun2022)
 | MediLink | Healthcare app built to make care clear, connected, and easy for patients and providers. | September 2025 | 4 | [Devpost](https://devpost.com/software/medilink-r0b347) |
 | Clientsight | Edit a website by looking at a UI element and speaking or typing a command: eye tracking plus voice. | October 2025 | 3 | [Devpost](https://devpost.com/software/clientsight) |
 
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/t4-back-straight.svg" width="100%" alt="Turn 4 and the back straight" />
+
 </div>
 
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 🔬 Wind tunnel: research
 
 First author, under review at the NeurIPS 2026 Workshop on AI Privacy (InfPriv): Closing the Compliance Gap: Benchmarking Open-Weights and Proprietary Large Language Models for Privacy-Constrained Contact Center Automation.<br/>
 Co-author, under review at the NeurIPS 2026 Trustworthy AI for Good (AI4GOOD) Workshop: One Carrier Isn't Enough: Redundancy-Aware Concept Suppression in Diffusion Transformers.
 
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/t5.svg" width="100%" alt="Turn 5 onto the lower straight" />
+
 </div>
 
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 🔧 Garage: skills
 
@@ -93,21 +79,21 @@ Co-author, under review at the NeurIPS 2026 Trustworthy AI for Good (AI4GOOD) Wo
 <img src="https://img.shields.io/badge/Claude%20Code-0d0d0d?style=flat&logo=claude&logoColor=e10600" alt="Claude Code" />
 <img src="https://img.shields.io/badge/Cursor-0d0d0d?style=flat&logo=cursor&logoColor=e10600" alt="Cursor" />
 
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/underpass.svg" width="100%" alt="Turns 6 and 7 into the underpass beneath the main straight" />
+
 </div>
 
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 📊 Telemetry: stats
 
 <img height="165" src="https://streak-stats.demolab.com?user=riptide-06&hide_border=true&background=0D0D0D&ring=E10600&fire=E10600&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=E10600&sideLabels=C8C8C8&dates=8A8A8A&stroke=2A2A2A" alt="GitHub streak" />
 
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/t8-t9.svg" width="100%" alt="Turns 8 and 9" />
+
 </div>
 
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/checkered-divider.svg" width="100%" alt="" />
 
 ## 📻 Team radio: links
 
@@ -115,8 +101,6 @@ Co-author, under review at the NeurIPS 2026 Trustworthy AI for Good (AI4GOOD) Wo
 <a href="https://www.linkedin.com/in/tarun-chandra1/"><img src="https://img.shields.io/badge/LinkedIn-tarun--chandra1-e10600?style=flat&logo=linkedin&logoColor=ffffff&labelColor=0d0d0d" alt="LinkedIn" /></a>
 <a href="mailto:n.tarun2022@gmail.com"><img src="https://img.shields.io/badge/Email-n.tarun2022%40gmail.com-e10600?style=flat&logo=gmail&logoColor=ffffff&labelColor=0d0d0d" alt="Email" /></a>
 
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/tandem-drift.svg" width="100%" alt="Two cars tandem drifting around a track" />
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:e10600,55:ffffff,100:f4f4f4&height=120&section=footer&animation=fadeIn" width="100%" alt="" />
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/footer.svg" width="100%" alt="Final corner onto the main straight, with live timing" />
 
 </div>
