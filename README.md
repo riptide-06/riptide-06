@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/header.svg" width="100%" alt="Tarun Chandra, AI-native product builder. Race start on the main straight." />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:f4f4f4,45:ffffff,100:e10600&height=190&section=header&text=Tarun%20Chandra&fontSize=60&fontColor=0b0b0b&animation=fadeIn&desc=AI-native%20product%20builder&descAlignY=74&descSize=19&descColor=0b0b0b" width="100%" alt="Tarun Chandra, AI-native product builder" />
 
-**Ships by orchestrating coding agents. Verifies with acceptance tests and evals. Two papers under review at NeurIPS 2026 workshops. UC Santa Cruz, June 2027.**
+<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=20&pause=1000&color=E10600&center=true&vCenter=true&width=700&lines=Ships+by+orchestrating+coding+agents;Verifies+with+acceptance+tests+and+evals;Two+papers+under+review+at+NeurIPS+2026+workshops;UC+Santa+Cruz%2C+June+2027" alt="Ships by orchestrating coding agents. Verifies with acceptance tests and evals. Two papers under review at NeurIPS 2026 workshops. UC Santa Cruz, June 2027." />
+
+<img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/header.svg" width="100%" alt="Race start on the main straight" />
 
 </div>
 
@@ -102,5 +104,11 @@ Co-author, under review at the NeurIPS 2026 Trustworthy AI for Good (AI4GOOD) Wo
 <a href="mailto:n.tarun2022@gmail.com"><img src="https://img.shields.io/badge/Email-n.tarun2022%40gmail.com-e10600?style=flat&logo=gmail&logoColor=ffffff&labelColor=0d0d0d" alt="Email" /></a>
 
 <img src="https://raw.githubusercontent.com/riptide-06/riptide-06/main/assets/racing/footer.svg" width="100%" alt="Final corner onto the main straight, with live timing" />
+
+</div>
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:e10600,55:ffffff,100:f4f4f4&height=110&section=footer&animation=fadeIn" width="100%" alt="" />
 
 </div>
